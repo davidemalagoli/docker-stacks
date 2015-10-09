@@ -35,8 +35,7 @@ RUN wget --quiet https://github.com/krallin/tini/releases/download/v0.6.0/tini &
 ENV CONDA_DIR /opt/conda
 ENV PATH $CONDA_DIR/bin:$PATH
 ENV SHELL /bin/bash
-ENV NB_USER admin
-ENV NB_UID 1000
+
 
 # Install conda
 RUN mkdir -p $CONDA_DIR && \
@@ -55,23 +54,18 @@ RUN conda install --yes \
 
 # Create admin user with UID=1000 and in the 'users' group
 # Grant ownership over the conda dir and home dir, but stick the group as root.
-RUN useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && \
-    mkdir /home/$NB_USER/work && \
-    mkdir /home/$NB_USER/.jupyter && \
-    mkdir /home/$NB_USER/.local && \
-    chown -R $NB_USER:users $CONDA_DIR && \
-    chown -R $NB_USER:users /home/$NB_USER
+RUN useradd -m -s /bin/bash -N -u 1000 admin && \
+    mkdir /home/admin/work && \
+    mkdir /home/admin/.jupyter && \
+    mkdir /home/admin/.local && \
+    chown -R admin:users $CONDA_DIR && \
+    chown -R admin:users /home/admin
 
-# Configure container startup
-EXPOSE 8888
-WORKDIR /home/$NB_USER/work
-ENTRYPOINT ["tini", "--"]
-######CMD ["start-notebook.sh"]
 
 # Add local files as late as possible to avoid cache busting
 COPY start-notebook.sh /usr/local/bin/
-COPY jupyter_notebook_config.py /home/$NB_USER/.jupyter/
-RUN chown -R $NB_USER:users /home/$NB_USER/.jupyter
+COPY jupyter_notebook_config.py /home/admin/.jupyter/
+RUN chown -R admin:users /home/admin/.jupyter
 
 
 ##### INSTALL SPARK AND SCIENTIFIC PYTHON TOOLS
@@ -157,7 +151,7 @@ COPY kernel.json /opt/conda/share/jupyter/kernels/scala/
 
 USER root
 
-# Install Python 2 kernel spec globally to avoid permission problems when NB_UID
+# Install Python 2 kernel spec globally to avoid permission problems when 1000
 # switching at runtime.
 RUN $CONDA_DIR/envs/python2/bin/python \
     $CONDA_DIR/envs/python2/bin/ipython \
@@ -172,6 +166,8 @@ RUN conda install --yes h5py theano
 RUN pip install keras
 RUN pip install plotly
 
-#RUN apt-get install -y libhdf5-dev
-#RUN conda install --yes keras
-#RUN conda install --yes plotly
+# Configure container startup
+EXPOSE 8888
+WORKDIR /home/admin/work
+ENTRYPOINT ["tini", "--"]
+#CMD ["start-notebook.sh"]
