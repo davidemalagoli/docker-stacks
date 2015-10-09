@@ -171,3 +171,22 @@ EXPOSE 8888
 WORKDIR /home/admin/work
 ENTRYPOINT ["tini", "--"]
 #CMD ["start-notebook.sh"]
+
+
+## INSTALL JUPYTERHUB
+RUN apt-get install -yq npm nodejs-legacy
+
+RUN npm install -g configurable-http-proxy
+RUN mkdir -p /srv/
+RUN cd  /srv/
+RUN git clone https://github.com/jupyter/jupyterhub.git
+WORKDIR /srv/jupyterhub/
+
+RUN pip install jupyterhub
+
+EXPOSE 8000
+
+ONBUILD ADD jupyterhub_config.py /srv/jupyterhub/jupyterhub_config.py
+CMD ["jupyterhub", "-f", "/srv/jupyterhub/jupyterhub_config.py"]
+
+RUN echo "admin:admin" | chpasswd

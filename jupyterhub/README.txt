@@ -3,7 +3,10 @@ git clone https://github.com/davidemalagoli/docker-stacks.git
 cd /docker-stacks/jupyterhub
 
 docker build .
-docker run -it -p 8888:8888 d2b290fb4f8c /usr/local/bin/start-notebook.sh
+docker run -it -p 8888:8888 >>IMAGEID<< /usr/local/bin/start-notebook.sh
+
+## IF YOU NEED TO RUN THE JUPYTERHUB
+docker run -it -p 8000:8000 >>IMAGEID<< jupyterhub
 
 ## IF YOU NEED TO MOVE THE DOCKER VAR TO EXTERNAL DRIVE
 #stop the docker daemon
