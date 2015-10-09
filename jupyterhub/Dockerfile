@@ -1,5 +1,5 @@
 # Copyright (c) Jupyter Development Team.
-FROM ubuntu
+FROM ubuntu:15.04
 
 MAINTAINER ContentWise 
 
@@ -129,8 +129,6 @@ RUN conda install --yes \
     'scipy=0.15*' \
     'seaborn=0.6*' \
     'scikit-learn=0.16*' \
-    plotly \
-    keras \
     && conda clean -yt
 
 # Install Python 2 packages
@@ -142,8 +140,6 @@ RUN conda create -p $CONDA_DIR/envs/python2 python=2.7 \
     'scipy=0.15*' \
     'seaborn=0.6*' \
     'scikit-learn=0.16*' \
-    plotly \
-    keras \
     pyzmq \
     && conda clean -yt
 
@@ -170,7 +166,12 @@ RUN $CONDA_DIR/envs/python2/bin/python \
 
 
 # INSTALL ADDITIONAL PACKAGES
+#RUN pip install --no-use-wheel --no-cache-dir h5py
+RUN conda install --yes h5py theano
+
+RUN pip install keras
+RUN pip install plotly
 
 #RUN apt-get install -y libhdf5-dev
-RUN conda install --yes keras
+#RUN conda install --yes keras
 #RUN conda install --yes plotly
