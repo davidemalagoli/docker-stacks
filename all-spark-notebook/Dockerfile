@@ -6,7 +6,7 @@ MAINTAINER Jupyter Project <jupyter@googlegroups.com>
 USER root
 
 # Spark dependencies
-ENV APACHE_SPARK_VERSION 1.4.1
+ENV APACHE_SPARK_VERSION 1.5.1
 RUN apt-get -y update && \
     apt-get install -y --no-install-recommends openjdk-7-jre-headless && \
     apt-get clean
@@ -48,8 +48,6 @@ ENV SPARK_HOME /usr/local/spark
 ENV R_LIBS_USER $SPARK_HOME/R/lib
 ENV PYTHONPATH $SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-0.8.2.1-src.zip
 ENV MESOS_NATIVE_LIBRARY /usr/local/lib/libmesos.so
-
-USER jovyan
 
 # Install Python 3 packages
 RUN conda install --yes \
@@ -93,3 +91,10 @@ RUN $CONDA_DIR/envs/python2/bin/python \
     $CONDA_DIR/envs/python2/bin/ipython \
     kernelspec install-self
 
+
+
+# INSTALL KERAS
+
+RUN apt-get install -y libhdf5-dev
+RUN conda install --yes keras
+RUN conda install --yes plotly

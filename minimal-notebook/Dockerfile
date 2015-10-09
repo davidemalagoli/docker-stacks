@@ -35,7 +35,7 @@ RUN wget --quiet https://github.com/krallin/tini/releases/download/v0.6.0/tini &
 ENV CONDA_DIR /opt/conda
 ENV PATH $CONDA_DIR/bin:$PATH
 ENV SHELL /bin/bash
-ENV NB_USER jovyan
+ENV NB_USER admin
 ENV NB_UID 1000
 
 # Install conda
@@ -53,7 +53,7 @@ RUN conda install --yes \
     terminado \
     && conda clean -yt
 
-# Create jovyan user with UID=1000 and in the 'users' group
+# Create admin user with UID=1000 and in the 'users' group
 # Grant ownership over the conda dir and home dir, but stick the group as root.
 RUN useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && \
     mkdir /home/$NB_USER/work && \
