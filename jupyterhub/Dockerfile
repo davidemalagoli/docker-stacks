@@ -165,6 +165,8 @@ RUN conda install --yes h5py theano
 
 RUN pip install keras
 RUN pip install plotly
+RUN pip install jellyfish
+RUN conda install --yes gensim
 
 # Configure container startup
 EXPOSE 8888
