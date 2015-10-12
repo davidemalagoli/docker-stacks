@@ -11,7 +11,7 @@ docker run -it -p 8888:8888 >>IMAGEID<< /usr/local/bin/start-notebook.sh
 docker run -it -p 8000:8000 >>IMAGEID<< jupyterhub
 
 ## TO MOUNT HOST VOLUME INSIDE DOCKER (suggested for tmp storage on amazon ssd)
-docker run -it p 8888:8888 >>IMAGEID<< /usr/local/bin/start-notebook.sh -v /mnt:/tmp
+docker run -it -p 8888:8888 >>IMAGEID<< /usr/local/bin/start-notebook.sh -v /mnt:/tmp
 
 
 ## IF YOU NEED TO MOVE THE DOCKER VAR TO EXTERNAL DRIVE
