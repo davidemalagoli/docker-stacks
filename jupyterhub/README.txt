@@ -3,10 +3,16 @@ git clone https://github.com/davidemalagoli/docker-stacks.git
 cd /docker-stacks/jupyterhub
 
 docker build .
+## at the end of the process the imageid will be provided, otherwise use "docker ps -a" to see al images
+
 docker run -it -p 8888:8888 >>IMAGEID<< /usr/local/bin/start-notebook.sh
 
 ## IF YOU NEED TO RUN THE JUPYTERHUB
 docker run -it -p 8000:8000 >>IMAGEID<< jupyterhub
+
+## TO MOUNT HOST VOLUME INSIDE DOCKER (suggested for tmp storage on amazon ssd)
+docker run -it p 8888:8888 >>IMAGEID<< /usr/local/bin/start-notebook.sh -v /mnt:/tmp
+
 
 ## IF YOU NEED TO MOVE THE DOCKER VAR TO EXTERNAL DRIVE
 #stop the docker daemon
