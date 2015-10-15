@@ -5,9 +5,12 @@ cd /docker-stacks/jupyterhub
 docker build .
 ## at the end of the process the imageid will be provided, otherwise use "docker ps -a" to see al images
 
+---------------------------------------------------------------------------------------
+##  TO RUN THE JUPYTER NOTEBOOK
 docker run -it -p 8888:8888 >>IMAGEID<< /usr/local/bin/start-notebook.sh
 
-## IF YOU NEED TO RUN THE JUPYTERHUB
+---------------------------------------------------------------------------------------
+##  TO RUN THE JUPYTERHUB
 docker run -it -p 8000:8000 >>IMAGEID<< jupyterhub
 
 ---------------------------------------------------------------------------------------
