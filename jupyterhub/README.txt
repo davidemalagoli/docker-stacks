@@ -10,10 +10,11 @@ docker run -it -p 8888:8888 >>IMAGEID<< /usr/local/bin/start-notebook.sh
 ## IF YOU NEED TO RUN THE JUPYTERHUB
 docker run -it -p 8000:8000 >>IMAGEID<< jupyterhub
 
+---------------------------------------------------------------------------------------
 ## TO MOUNT HOST VOLUME INSIDE DOCKER (suggested for tmp storage on amazon ssd)
-docker run -it -p 8888:8888 >>IMAGEID<< /usr/local/bin/start-notebook.sh -v /mnt:/tmp
+docker run -it -p 8888:8888 -v /mnt/:/opt >>IMAGEID<< /usr/local/bin/start-notebook.sh 
 
-
+---------------------------------------------------------------------------------------
 ## IF YOU NEED TO MOVE THE DOCKER VAR TO EXTERNAL DRIVE
 #stop the docker daemon
 docker ps -q | xargs docker kill
