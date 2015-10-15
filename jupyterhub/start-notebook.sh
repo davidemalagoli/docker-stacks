@@ -8,7 +8,7 @@ fi
 
 # Enable sudo if requested
 if [ ! -z "$GRANT_SUDO" ]; then
-    echo "$NB_USER ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/notebook
+    echo "admin ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/notebook
 fi
 
 # Start the notebook server
